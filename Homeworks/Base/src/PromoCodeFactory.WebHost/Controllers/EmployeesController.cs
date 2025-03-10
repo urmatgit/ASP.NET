@@ -40,7 +40,7 @@ namespace PromoCodeFactory.WebHost.Controllers
                     FullName = x.FullName,
                 }).ToList();
 
-            return employeesModelList;
+            return  employeesModelList;
         }
 
         /// <summary>
@@ -55,46 +55,87 @@ namespace PromoCodeFactory.WebHost.Controllers
             if (employee == null)
                 return NotFound();
 
-            var employeeModel = new EmployeeResponse()
-            {
-                Id = employee.Id,
-                Email = employee.Email,
-                Roles = employee.Roles.Select(x => new RoleItemResponse()
-                {
-                    Name = x.Name,
-                    Description = x.Description
-                }).ToList(),
-                FullName = employee.FullName,
-                AppliedPromocodesCount = employee.AppliedPromocodesCount
-            };
+            var employeeModel = ConvertorToResonse(employee);
 
             return employeeModel;
         }
-
+        /// <summary>
+        /// Создать сотрутника
+        /// </summary>
+        /// <param name="request"></param>
+        /// <returns></returns>
         [HttpPost]
         public async Task<ActionResult<EmployeeResponse>> CreateAsync(CreateEmployeeRequest request){
+            var employees = await _employeeRepository.GetAllAsync();
+            if (employees.SingleOrDefault(x => x.Email.Equals(request.email)) is not null)
+            {
+                return BadRequest("Employer with this Email already exists.");
+            }
             var employee = new Employee
             {
+                Id=Guid.NewGuid(),
                 FirstName = request.firstName,
                 LastName = request.lastName,
                 Email = request.email,
                 AppliedPromocodesCount = request.appliedPromocodesCount
-               
+                
             };
             var result = await _employeeRepository.CreateAsync(employee);
-            return Convertor(result);
+            return ConvertorToResonse(result);
         }
-        //Потом можно использовать Mapper 
-        private EmployeeResponse Convertor(Employee employee) {
+        /// <summary>
+        /// Изменение данных сотрудника
+        /// </summary>
+        /// <param name="request"></param>
+        /// <returns></returns>
+        [HttpPut]
+        public async Task<ActionResult<EmployeeResponse>> UpdateAsync(UpdateEmployeeRequest request)
+        {
+            var result = await _employeeRepository.UpdateAsync(ConvertorToDomain(request));
+
+           return ConvertorToResonse(result);
+        }
+        /// <summary>
+        /// Удаляем
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        [HttpDelete("{id:guid}")]
+        public async Task<ActionResult> DeleteAsync(Guid id)
+        {
+            var result= await _employeeRepository.DeleteAsync(id);
+            if (result)
+            {
+                return Ok("Employee deleted");
+            }
+            else
+                return NotFound($"Employee with id ({id}) not found");
+        }
+        /// <summary>
+        /// TODO Потом  использовать Mapper 
+        /// </summary>
+        /// <param name="employee"></param>
+        /// <returns></returns>
+        private Employee ConvertorToDomain(UpdateEmployeeRequest employee)
+        {
+            var employeeModel = new Employee()
+            {
+                Id = employee.id,
+                Email = employee.email,
+                FirstName = employee.firstName,
+                LastName = employee.lastName,
+                
+                AppliedPromocodesCount = employee.appliedPromocodesCount
+            };
+
+            return employeeModel;
+        }
+            private EmployeeResponse ConvertorToResonse(Employee employee) {
             var employeeModel = new EmployeeResponse()
             {
                 Id = employee.Id,
                 Email = employee.Email,
-                Roles = employee.Roles.Select(x => new RoleItemResponse()
-                {
-                    Name = x.Name,
-                    Description = x.Description
-                }).ToList(),
+                
                 FullName = employee.FullName,
                 AppliedPromocodesCount = employee.AppliedPromocodesCount
             };

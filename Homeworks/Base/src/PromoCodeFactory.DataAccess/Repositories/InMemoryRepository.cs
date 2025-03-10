@@ -32,20 +32,25 @@ namespace PromoCodeFactory.DataAccess.Repositories
             return Task.FromResult(entity);
         }
 
-        public Task<T> UpdateAsync( T entity)
+        public async Task<T> UpdateAsync( T entity)
         {
-            Data.Remove(entity);
+            await DeleteAsync(entity.Id);
             Data.Add(entity);
-            return Task.FromResult(entity);
+            return entity;
         }
 
-        public async Task DeleteAsync(Guid id)
+        public async Task<bool> DeleteAsync(Guid id)
         {
             var enitity=await  GetByIdAsync(id);
             if (enitity is not null)
             {
                 Data.Remove(enitity);
+                return true;
+
             }
+            return false;
         }
+
+        
     }
 }
