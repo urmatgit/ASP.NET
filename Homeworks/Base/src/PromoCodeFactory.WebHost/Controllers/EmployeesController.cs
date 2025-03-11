@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using PromoCodeFactory.Core.Abstractions.Repositories;
 using PromoCodeFactory.Core.Domain.Administration;
+using PromoCodeFactory.WebHost.Common;
 using PromoCodeFactory.WebHost.Models;
 
 namespace PromoCodeFactory.WebHost.Controllers
@@ -55,7 +56,7 @@ namespace PromoCodeFactory.WebHost.Controllers
             if (employee == null)
                 return NotFound();
 
-            var employeeModel = ConvertorToResponse(employee);
+            var employeeModel = Helpers.ConvertorDomainToResponse(employee);
 
             return Ok(employeeModel);
         }
@@ -81,7 +82,7 @@ namespace PromoCodeFactory.WebHost.Controllers
                 
             };
             var result = await _employeeRepository.CreateAsync(employee);
-            return Ok(ConvertorToResponse(result));
+            return Ok(Helpers.ConvertorDomainToResponse(result));
         }
         /// <summary>
         /// Изменение данных сотрудника
@@ -91,9 +92,9 @@ namespace PromoCodeFactory.WebHost.Controllers
         [HttpPut]
         public async Task<ActionResult<EmployeeResponse>> UpdateAsync(UpdateEmployeeRequest request)
         {
-            var result = await _employeeRepository.UpdateAsync(ConvertorToDomain(request));
+            var result = await _employeeRepository.UpdateAsync(Helpers.ConvertorUpdateRequestToDomain(request));
 
-           return Ok(ConvertorToResponse(result));
+           return Ok(Helpers.ConvertorDomainToResponse(result));
         }
         /// <summary>
         /// Удаляем
@@ -101,47 +102,16 @@ namespace PromoCodeFactory.WebHost.Controllers
         /// <param name="id"></param>
         /// <returns></returns>
         [HttpDelete("{id:guid}")]
-        public async Task<ActionResult> DeleteAsync(Guid id)
+        public async Task<ActionResult<bool>> DeleteAsync(Guid id)
         {
             var result= await _employeeRepository.DeleteAsync(id);
             if (result)
             {
-                return Ok("Employee deleted");
+                return Ok(true);
             }
             else
                 return NotFound($"Employee with id ({id}) not found");
         }
-        /// <summary>
-        /// TODO Потом  использовать Mapper 
-        /// </summary>
-        /// <param name="employee"></param>
-        /// <returns></returns>
-        private Employee ConvertorToDomain(UpdateEmployeeRequest employee)
-        {
-            var employeeModel = new Employee()
-            {
-                Id = employee.id,
-                Email = employee.email,
-                FirstName = employee.firstName,
-                LastName = employee.lastName,
-                
-                AppliedPromocodesCount = employee.appliedPromocodesCount
-            };
-
-            return employeeModel;
-        }
-
-        private EmployeeResponse ConvertorToResponse(Employee employee) {
-            var employeeModel = new EmployeeResponse()
-            {
-                Id = employee.Id,
-                Email = employee.Email,
-                
-                FullName = employee.FullName,
-                AppliedPromocodesCount = employee.AppliedPromocodesCount
-            };
-
-            return employeeModel;
-        }
+       
     }
 }

@@ -29,7 +29,7 @@ namespace PromoCodeFactory.DataAccess.Repositories
         {
               
             Data.Add(entity);
-            return Task.FromResult(entity);
+            return Task.FromResult((T)entity);
         }
 
         public async Task<T> UpdateAsync( T entity)
