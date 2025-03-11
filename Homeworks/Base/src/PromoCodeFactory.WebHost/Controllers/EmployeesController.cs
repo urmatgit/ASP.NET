@@ -55,9 +55,9 @@ namespace PromoCodeFactory.WebHost.Controllers
             if (employee == null)
                 return NotFound();
 
-            var employeeModel = ConvertorToResonse(employee);
+            var employeeModel = ConvertorToResponse(employee);
 
-            return employeeModel;
+            return Ok(employeeModel);
         }
         /// <summary>
         /// Создать сотрутника
@@ -81,7 +81,7 @@ namespace PromoCodeFactory.WebHost.Controllers
                 
             };
             var result = await _employeeRepository.CreateAsync(employee);
-            return ConvertorToResonse(result);
+            return Ok(ConvertorToResponse(result));
         }
         /// <summary>
         /// Изменение данных сотрудника
@@ -93,7 +93,7 @@ namespace PromoCodeFactory.WebHost.Controllers
         {
             var result = await _employeeRepository.UpdateAsync(ConvertorToDomain(request));
 
-           return ConvertorToResonse(result);
+           return Ok(ConvertorToResponse(result));
         }
         /// <summary>
         /// Удаляем
@@ -130,7 +130,8 @@ namespace PromoCodeFactory.WebHost.Controllers
 
             return employeeModel;
         }
-            private EmployeeResponse ConvertorToResonse(Employee employee) {
+
+        private EmployeeResponse ConvertorToResponse(Employee employee) {
             var employeeModel = new EmployeeResponse()
             {
                 Id = employee.Id,
