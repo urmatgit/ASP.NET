@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using PromoCodeFactory.DataAccess.Data;
 
@@ -10,9 +11,11 @@ using PromoCodeFactory.DataAccess.Data;
 namespace PromoCodeFactory.DataAccess.Migrations
 {
     [DbContext(typeof(EfDataContext))]
-    partial class EfDataContextModelSnapshot : ModelSnapshot
+    [Migration("20250320135625_InitBase2")]
+    partial class InitBase2
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder.HasAnnotation("ProductVersion", "9.0.3");
@@ -139,10 +142,10 @@ namespace PromoCodeFactory.DataAccess.Migrations
                         .HasMaxLength(10)
                         .HasColumnType("TEXT");
 
-                    b.Property<Guid?>("CustomerId")
+                    b.Property<Guid>("CustomerId")
                         .HasColumnType("TEXT");
 
-                    b.Property<Guid?>("EmployeeId")
+                    b.Property<Guid>("EmployeeId")
                         .HasColumnType("TEXT");
 
                     b.Property<DateTime>("EndDate")
@@ -153,7 +156,7 @@ namespace PromoCodeFactory.DataAccess.Migrations
                         .HasMaxLength(100)
                         .HasColumnType("TEXT");
 
-                    b.Property<Guid?>("PreferenceId")
+                    b.Property<Guid>("PreferenceId")
                         .HasColumnType("TEXT");
 
                     b.Property<string>("ServiceInfo")
@@ -204,15 +207,21 @@ namespace PromoCodeFactory.DataAccess.Migrations
                 {
                     b.HasOne("PromoCodeFactory.Core.Domain.PromoCodeManagement.Customer", "Customer")
                         .WithMany("PromoCodes")
-                        .HasForeignKey("CustomerId");
+                        .HasForeignKey("CustomerId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.HasOne("PromoCodeFactory.Core.Domain.Administration.Employee", "PartnerManager")
                         .WithMany()
-                        .HasForeignKey("EmployeeId");
+                        .HasForeignKey("EmployeeId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.HasOne("PromoCodeFactory.Core.Domain.PromoCodeManagement.Preference", "Preference")
                         .WithMany()
-                        .HasForeignKey("PreferenceId");
+                        .HasForeignKey("PreferenceId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("Customer");
 

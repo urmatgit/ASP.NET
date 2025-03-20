@@ -15,6 +15,7 @@ namespace PromoCodeFactory.Core.Abstractions.Repositories
         Task<T> CreateAsync(T t);
         Task<T> UpdateAsync(T t);
         Task<bool> DeleteAsync(Guid t);
+        
         /// <summary>
         /// Сохранить изменения.
         /// </summary>

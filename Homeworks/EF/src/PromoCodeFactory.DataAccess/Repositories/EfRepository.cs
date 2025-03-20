@@ -65,5 +65,10 @@ namespace PromoCodeFactory.DataAccess.Repositories
         {
             return await _entitySet.AnyAsync();
         }
+
+        public object GetDbSet()
+        {
+            return _entitySet;
+        }
     }
 }

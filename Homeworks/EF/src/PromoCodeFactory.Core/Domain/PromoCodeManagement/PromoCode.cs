@@ -17,12 +17,13 @@ namespace PromoCodeFactory.Core.Domain.PromoCodeManagement
         public DateTime EndDate { get; set; }
 
         public string PartnerName { get; set; }
+        public Guid? EmployeeId { get; set; }
+        public virtual  Employee PartnerManager { get; set; }
 
-        public Employee PartnerManager { get; set; }
-
-        public Preference Preference { get; set; }
+        public Guid? PreferenceId { get; set; }
+        public virtual Preference Preference { get; set; }
 
         public virtual Customer Customer { get; set; }
-        public Guid CustomerId { get; set; }
+        public Guid? CustomerId { get; set; }
     }
 }
