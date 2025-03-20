@@ -1,3 +1,5 @@
+using Mapster;
+using MapsterMapper;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
@@ -9,6 +11,7 @@ using PromoCodeFactory.Core.Domain.PromoCodeManagement;
 using PromoCodeFactory.DataAccess;
 using PromoCodeFactory.DataAccess.Data;
 using PromoCodeFactory.DataAccess.Repositories;
+using System.Reflection;
 
 namespace PromoCodeFactory.WebHost
 {
@@ -25,6 +28,13 @@ namespace PromoCodeFactory.WebHost
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllers();
+            //Config mapstger
+            var config = TypeAdapterConfig.GlobalSettings;
+            config.Scan(Assembly.GetExecutingAssembly());
+            services.AddSingleton(config);
+            services.AddScoped<IMapper, ServiceMapper>();
+
+
             services.AddScoped(typeof(IRepository<Employee>), (x) =>
                 new InMemoryRepository<Employee>(FakeDataFactory.Employees));
             services.AddScoped(typeof(IRepository<Role>), (x) =>
