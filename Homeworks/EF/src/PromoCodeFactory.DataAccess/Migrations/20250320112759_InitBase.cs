@@ -30,7 +30,7 @@ namespace PromoCodeFactory.DataAccess.Migrations
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "TEXT", nullable: false),
-                    Name = table.Column<string>(type: "TEXT", nullable: false)
+                    Name = table.Column<string>(type: "TEXT", maxLength: 100, nullable: false)
                 },
                 constraints: table =>
                 {
@@ -82,7 +82,7 @@ namespace PromoCodeFactory.DataAccess.Migrations
                     FirstName = table.Column<string>(type: "TEXT", maxLength: 100, nullable: false),
                     LastName = table.Column<string>(type: "TEXT", maxLength: 100, nullable: false),
                     Email = table.Column<string>(type: "TEXT", nullable: false),
-                    RoleId = table.Column<Guid>(type: "TEXT", nullable: true),
+                    RoleId = table.Column<Guid>(type: "TEXT", nullable: false),
                     AppliedPromocodesCount = table.Column<int>(type: "INTEGER", nullable: false)
                 },
                 constraints: table =>
@@ -92,7 +92,8 @@ namespace PromoCodeFactory.DataAccess.Migrations
                         name: "FK_Employees_Roles_RoleId",
                         column: x => x.RoleId,
                         principalTable: "Roles",
-                        principalColumn: "Id");
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(

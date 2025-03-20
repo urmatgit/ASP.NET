@@ -23,6 +23,9 @@ namespace PromoCodeFactory.WebHost.Mapping
             //role
             config.NewConfig<Role, RoleItemResponse>();
 
+            //Preference
+            config.NewConfig<Preference, PreferenceResponse>();
+            config.NewConfig<CustomerPreference, CustomerPreferenceResponse>();
         }
     }
 }

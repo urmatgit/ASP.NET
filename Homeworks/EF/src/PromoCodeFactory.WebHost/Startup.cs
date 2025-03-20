@@ -35,17 +35,19 @@ namespace PromoCodeFactory.WebHost
             services.AddScoped<IMapper, ServiceMapper>();
 
 
-            services.AddScoped(typeof(IRepository<Employee>), (x) =>
-                new InMemoryRepository<Employee>(FakeDataFactory.Employees));
-            services.AddScoped(typeof(IRepository<Role>), (x) =>
-                new InMemoryRepository<Role>(FakeDataFactory.Roles));
-            services.AddScoped(typeof(IRepository<Preference>), (x) =>
-                new InMemoryRepository<Preference>(FakeDataFactory.Preferences));
-            services.AddScoped(typeof(IRepository<Customer>), (x) =>
-                new InMemoryRepository<Customer>(FakeDataFactory.Customers));
+            //services.AddScoped(typeof(IRepository<Employee>), (x) =>
+            //    new InMemoryRepository<Employee>(FakeDataFactory.Employees));
+            //services.AddScoped(typeof(IRepository<Role>), (x) =>
+            //    new InMemoryRepository<Role>(FakeDataFactory.Roles));
+            //services.AddScoped(typeof(IRepository<Preference>), (x) =>
+            //    new InMemoryRepository<Preference>(FakeDataFactory.Preferences));
+            //services.AddScoped(typeof(IRepository<Customer>), (x) =>
+            //    new InMemoryRepository<Customer>(FakeDataFactory.Customers));
             
             string _connString= Configuration.GetConnectionString("DefaultConnection");
             services.AddDataAccess(_connString);
+
+            
 
             services.AddOpenApiDocument(options =>
             {

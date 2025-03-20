@@ -1,13 +1,26 @@
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.EntityFrameworkCore.Metadata.Internal;
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using PromoCodeFactory.WebHost.InitData;
+using System.Threading.Tasks;
 
 namespace PromoCodeFactory.WebHost
 {
     public class Program
     {
-        public static void Main(string[] args)
+        public static async Task Main(string[] args)
         {
-            CreateHostBuilder(args).Build().Run();
+            var host = CreateHostBuilder(args).Build();
+            using (var scope = host.Services.CreateScope())
+            {
+                var seekData =new SeekFromFakeDataFactory(scope.ServiceProvider);
+                //await seekData.RoleDataSeek();
+                await seekData.EmployeeDataSeek();
+                await seekData.ReferenceDataSeek();
+                await seekData.CustomerDataSeek();
+            }
+                host.Run();
         }
 
         public static IHostBuilder CreateHostBuilder(string[] args) =>

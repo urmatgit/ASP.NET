@@ -16,7 +16,9 @@ namespace PromoCodeFactory.DataAccess.Data
                 Email = "owner@somemail.ru",
                 FirstName = "Иван",
                 LastName = "Сергеев",
+                
                 Role = Roles.FirstOrDefault(x => x.Name == "Admin"),
+                
                 AppliedPromocodesCount = 5
             },
             new Employee()
@@ -70,6 +72,7 @@ namespace PromoCodeFactory.DataAccess.Data
             get
             {
                 var customerId = Guid.Parse("a6c8c6b1-4349-45b0-ab31-244740aaf0f0");
+                var preferenceId = Preferences.First().Id;
                 var customers = new List<Customer>()
                 {
                     new Customer()
@@ -79,6 +82,14 @@ namespace PromoCodeFactory.DataAccess.Data
                         FirstName = "Иван",
                         LastName = "Петров",
                         //TODO: Добавить предзаполненный список предпочтений
+                        Preferences= new List<CustomerPreference>()
+                        {
+                            { new CustomerPreference(){ 
+                                CustomerId= customerId,
+                                PreferenceId=preferenceId
+                            }
+                            }
+                        }
                     }
                 };
 

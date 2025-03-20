@@ -1,6 +1,10 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
+using PromoCodeFactory.Core.Abstractions.Repositories;
+using PromoCodeFactory.Core.Domain.Administration;
+using PromoCodeFactory.Core.Domain.PromoCodeManagement;
 using PromoCodeFactory.DataAccess.Data;
+using PromoCodeFactory.DataAccess.Repositories;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -17,6 +21,12 @@ namespace PromoCodeFactory.DataAccess
             {
                 options.UseSqlite(stringConnection);
             });
+            //Add repositories
+            services.AddScoped<IRepository<Role>, EfRepository<Role>>();
+            services.AddScoped<IRepository<Employee>,EfRepository<Employee>>();
+            services.AddScoped<IRepository<Customer>, EfRepository<Customer>>();
+            services.AddScoped<IRepository<Preference>, EfRepository<Preference>>();
+            services.AddScoped<IRepository<PromoCode>, EfRepository<PromoCode>>();
             return services;
         }
     }

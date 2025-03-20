@@ -10,6 +10,6 @@ namespace PromoCodeFactory.Core.Domain.Administration
         public string Name { get; set; }
 
         public string Description { get; set; }
-        public List<Employee> Employees { get; set; }
+        public virtual List<Employee> Employees { get; set; }
     }
 }

@@ -17,7 +17,7 @@ namespace PromoCodeFactory.DataAccess.Configurations
             builder.Property(x=>x.FirstName).IsRequired().HasMaxLength(100);
             builder.Property(x=>x.LastName).IsRequired().HasMaxLength(100); ;
             builder.Property(x=> x.Email).IsRequired();
-
+            
         }
     }
 }

@@ -15,7 +15,7 @@ namespace PromoCodeFactory.DataAccess.Configurations
         {
             builder.HasKey(x => x.Id);
             builder.Property(x=>x.Name).IsRequired().HasMaxLength(100);
-            builder.HasMany(e=>e.Employees).WithOne(x=>x.Role).HasForeignKey(x=>x.RoleId);
+            builder.HasMany(e => e.Employees).WithOne(x => x.Role).HasForeignKey(r=>r.RoleId).OnDelete(DeleteBehavior.Cascade);
         }
     }
 }

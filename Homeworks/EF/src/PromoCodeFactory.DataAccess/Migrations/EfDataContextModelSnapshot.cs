@@ -40,7 +40,7 @@ namespace PromoCodeFactory.DataAccess.Migrations
                         .HasMaxLength(100)
                         .HasColumnType("TEXT");
 
-                    b.Property<Guid?>("RoleId")
+                    b.Property<Guid>("RoleId")
                         .HasColumnType("TEXT");
 
                     b.HasKey("Id");
@@ -117,6 +117,7 @@ namespace PromoCodeFactory.DataAccess.Migrations
 
                     b.Property<string>("Name")
                         .IsRequired()
+                        .HasMaxLength(100)
                         .HasColumnType("TEXT");
 
                     b.HasKey("Id");
@@ -172,8 +173,10 @@ namespace PromoCodeFactory.DataAccess.Migrations
             modelBuilder.Entity("PromoCodeFactory.Core.Domain.Administration.Employee", b =>
                 {
                     b.HasOne("PromoCodeFactory.Core.Domain.Administration.Role", "Role")
-                        .WithMany()
-                        .HasForeignKey("RoleId");
+                        .WithMany("Employees")
+                        .HasForeignKey("RoleId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("Role");
                 });
@@ -218,6 +221,11 @@ namespace PromoCodeFactory.DataAccess.Migrations
                     b.Navigation("PartnerManager");
 
                     b.Navigation("Preference");
+                });
+
+            modelBuilder.Entity("PromoCodeFactory.Core.Domain.Administration.Role", b =>
+                {
+                    b.Navigation("Employees");
                 });
 
             modelBuilder.Entity("PromoCodeFactory.Core.Domain.PromoCodeManagement.Customer", b =>
