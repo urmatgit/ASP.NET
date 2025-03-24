@@ -70,6 +70,7 @@ namespace PromoCodeFactory.WebHost.Controllers
                 .Where(c => c.Preferences.Any(x => x.Preference.Name == request.Preference))
                 .FirstOrDefaultAsync();
             promoCode.Customer = customer;
+
             var preference = await _efDataContext.Set<Preference>()
                 .FirstOrDefaultAsync(x => x.Name == request.Preference);
 
