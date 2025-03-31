@@ -111,6 +111,8 @@ namespace PromoCodeFactory.WebHost.Controllers
                 PartnerId = partner.Id,
                 CreateDate = DateTime.Now,
                 EndDate = request.EndDate
+                
+                
             };
             
             partner.PartnerLimits.Add(newLimit);
