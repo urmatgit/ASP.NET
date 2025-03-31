@@ -15,7 +15,7 @@ namespace PromoCodeFactory.UnitTests.WebHost.Controllers.Partners
 {
     public class SetPartnerPromoCodeLimitAsyncTests: IClassFixture<TestFixture>
     {
-        //TODO: Add Unit Tests
+        
 
         private PartnersController _partnersController;
         private Mock<IRepository<Partner>> _repositoryPartnerMock
@@ -96,7 +96,7 @@ namespace PromoCodeFactory.UnitTests.WebHost.Controllers.Partners
             //Assert.Equal(actionResult.StatusCode, 400);
         }
         [Fact]
-        public async Task Test_Parner_SetLimit_CreatedAtAction_201()
+        public async Task Test_Parner_SetLimit_CreatedAtAction_201_UpdateVerify()
         {
             //Arrange
 
