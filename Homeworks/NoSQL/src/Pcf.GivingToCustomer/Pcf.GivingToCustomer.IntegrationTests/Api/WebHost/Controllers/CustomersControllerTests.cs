@@ -7,6 +7,7 @@ using FluentAssertions;
 using Microsoft.AspNetCore.Mvc.Testing;
 using Microsoft.AspNetCore.TestHost;
 using Microsoft.Extensions.DependencyInjection;
+using MongoDB.Bson;
 using Newtonsoft.Json;
 using Pcf.GivingToCustomer.Core.Abstractions.Gateways;
 using Pcf.GivingToCustomer.IntegrationTests.Fakes;
@@ -37,13 +38,13 @@ namespace Pcf.GivingToCustomer.IntegrationTests.Api.WebHost.Controllers
             //Arrange 
             var client = _factory.CreateClient();
             
-            var preferenceId = Guid.Parse("ef7f299f-92d7-459f-896e-078ed53ef99c");
+            var preferenceId =ObjectId.Parse("ef7f299f-92d7-459f-896e-078ed53ef99c");
             var request = new CreateOrEditCustomerRequest()
             {
                 Email = "some@mail.ru",
                 FirstName = "Иван",
                 LastName = "Петров",
-                PreferenceIds = new List<Guid>()
+                PreferenceIds = new List<ObjectId>()
                 {
                     preferenceId
                 }
@@ -90,7 +91,7 @@ namespace Pcf.GivingToCustomer.IntegrationTests.Api.WebHost.Controllers
 
             var expected = new CustomerResponse()
             {
-                Id = Guid.Parse("a6c8c6b1-4349-45b0-ab31-244740aaf0f0"),
+                Id =ObjectId.Parse("a6c8c6b1-4349-45b0-ab31-244740aaf0f0"),
                 Email = "ivan_sergeev@mail.ru",
                 FirstName = "Иван",
                 LastName = "Петров",
@@ -98,12 +99,12 @@ namespace Pcf.GivingToCustomer.IntegrationTests.Api.WebHost.Controllers
                 {
                     new PreferenceResponse()
                     {
-                        Id = Guid.Parse("ef7f299f-92d7-459f-896e-078ed53ef99c"),
+                        Id =ObjectId.Parse("ef7f299f-92d7-459f-896e-078ed53ef99c"),
                         Name = "Театр",
                     },
                     new PreferenceResponse()
                     {
-                        Id = Guid.Parse("76324c47-68d2-472d-abb8-33cfa8cc0c84"),
+                        Id = ObjectId.Parse("76324c47-68d2-472d-abb8-33cfa8cc0c84"),
                         Name = "Дети",                    
                     }
                 }

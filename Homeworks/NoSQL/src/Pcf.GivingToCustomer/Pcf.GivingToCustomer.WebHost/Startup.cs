@@ -17,6 +17,7 @@ using Pcf.GivingToCustomer.DataAccess.Data;
 using Pcf.GivingToCustomer.DataAccess.Repositories;
 using Pcf.GivingToCustomer.Integration;
 using IConfiguration = Microsoft.Extensions.Configuration.IConfiguration;
+using Pcf.GivingToCustomer.Core.Domain.Settings;
 
 namespace Pcf.GivingToCustomer.WebHost
 {
@@ -38,13 +39,26 @@ namespace Pcf.GivingToCustomer.WebHost
             services.AddScoped(typeof(IRepository<>), typeof(EfRepository<>));
             services.AddScoped<INotificationGateway, NotificationGateway>();
             services.AddScoped<IDbInitializer, EfDbInitializer>();
-            services.AddDbContext<DataContext>(x =>
+
+            
+            var mongoDbSettings = Configuration.GetSection("MongoDBSettings").Get<MongoDBSettings>();
+
+            services.AddDbContext<MongoDataContext>(x =>
             {
-                //x.UseSqlite("Filename=PromocodeFactoryGivingToCustomerDb.sqlite");
-                x.UseNpgsql(Configuration.GetConnectionString("PromocodeFactoryGivingToCustomerDb"));
-                x.UseSnakeCaseNamingConvention();
-                x.UseLazyLoadingProxies();
+                //x.UseSqlite("Filename=PromocodeFactoryAdministrationDb.sqlite");
+                x.UseMongoDB(mongoDbSettings.ConnectionString, mongoDbSettings.DatabaseName);
+                //x.UseNpgsql(Configuration.GetConnectionString("PromocodeFactoryAdministrationDb"));
+                //x.UseSnakeCaseNamingConvention();
+                //x.UseLazyLoadingProxies();
             });
+
+            //services.AddDbContext<DataContext>(x =>
+            //{
+            //    //x.UseSqlite("Filename=PromocodeFactoryGivingToCustomerDb.sqlite");
+            //    x.UseNpgsql(Configuration.GetConnectionString("PromocodeFactoryGivingToCustomerDb"));
+            //    x.UseSnakeCaseNamingConvention();
+            //    x.UseLazyLoadingProxies();
+            //});
 
             services.AddOpenApiDocument(options =>
             {

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using MongoDB.Bson;
+using System;
 using System.Collections.Generic;
 
 namespace Pcf.GivingToCustomer.WebHost.Models
@@ -18,6 +19,6 @@ namespace Pcf.GivingToCustomer.WebHost.Models
         public string FirstName { get; set; }
         public string LastName { get; set; }
         public string Email { get; set; }
-        public List<Guid> PreferenceIds { get; set; }
+        public List<ObjectId> PreferenceIds { get; set; }
     }
 }

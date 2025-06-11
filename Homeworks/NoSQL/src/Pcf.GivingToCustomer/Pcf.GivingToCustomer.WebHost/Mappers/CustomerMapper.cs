@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using MongoDB.Bson;
 using Pcf.GivingToCustomer.Core.Domain;
 using Pcf.GivingToCustomer.WebHost.Models;
 
@@ -15,7 +16,7 @@ namespace Pcf.GivingToCustomer.WebHost.Mappers
             if(customer == null)
             {
                 customer = new Customer();
-                customer.Id = Guid.NewGuid();
+                customer.Id = ObjectId.GenerateNewId(); //  Guid.NewGuid();
             }
             
             customer.FirstName = model.FirstName;

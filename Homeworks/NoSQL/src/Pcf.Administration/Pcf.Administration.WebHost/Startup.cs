@@ -16,7 +16,7 @@ using Pcf.Administration.DataAccess.Data;
 using Pcf.Administration.DataAccess.Repositories;
 using Pcf.Administration.Core.Domain.Administration;
 using IConfiguration = Microsoft.Extensions.Configuration.IConfiguration;
-using Pcf.Administration.Core.Domain.Settings;
+
 
 namespace Pcf.Administration.WebHost
 {
@@ -37,15 +37,14 @@ namespace Pcf.Administration.WebHost
                 x.SuppressAsyncSuffixInActionNames = false);
             services.AddScoped(typeof(IRepository<>), typeof(EfRepository<>));
             services.AddScoped<IDbInitializer, EfDbInitializer>();
-            var mongoDbSettings = Configuration.GetSection("MongoDBSettings").Get<MongoDBSettings>();
 
-            services.AddDbContext<MongoDataContext>(x =>
+            services.AddDbContext<DataContext>(x =>
             {
-                //x.UseSqlite("Filename=PromocodeFactoryAdministrationDb.sqlite");
-                x.UseMongoDB(mongoDbSettings.ConnectionString, mongoDbSettings.DatabaseName);
-                //x.UseNpgsql(Configuration.GetConnectionString("PromocodeFactoryAdministrationDb"));
-                //x.UseSnakeCaseNamingConvention();
-                //x.UseLazyLoadingProxies();
+                x.UseSqlite("Filename=PromocodeFactoryAdministrationDb.sqlite");
+                
+                x.UseNpgsql(Configuration.GetConnectionString("PromocodeFactoryAdministrationDb"));
+                x.UseSnakeCaseNamingConvention();
+                x.UseLazyLoadingProxies();
             });
 
             services.AddOpenApiDocument(options =>

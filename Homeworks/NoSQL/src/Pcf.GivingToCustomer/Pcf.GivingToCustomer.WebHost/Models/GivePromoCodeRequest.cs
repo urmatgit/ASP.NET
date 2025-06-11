@@ -1,4 +1,5 @@
-﻿using System;
+﻿using MongoDB.Bson;
+using System;
 
 namespace Pcf.GivingToCustomer.WebHost.Models
 {
@@ -6,13 +7,13 @@ namespace Pcf.GivingToCustomer.WebHost.Models
     {
         public string ServiceInfo { get; set; }
 
-        public Guid PartnerId { get; set; }
+        public ObjectId  PartnerId { get; set; }
 
-        public Guid PromoCodeId { get; set; }
+        public ObjectId PromoCodeId { get; set; }
         
         public string PromoCode { get; set; }
 
-        public Guid PreferenceId { get; set; }
+        public ObjectId PreferenceId { get; set; }
 
         public string BeginDate { get; set; }
 

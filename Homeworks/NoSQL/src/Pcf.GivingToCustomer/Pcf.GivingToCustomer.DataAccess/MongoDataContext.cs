@@ -1,17 +1,16 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using MongoDB.EntityFrameworkCore.Extensions;
-using Pcf.Administration.Core.Domain.Administration;
-using Pcf.Administration.DataAccess.Data;
+using Pcf.GivingToCustomer.Core.Domain;
 
-namespace Pcf.Administration.DataAccess
+namespace Pcf.GivingToCustomer.DataAccess
 {
     public class MongoDataContext
         : DbContext
     {
-        public DbSet<Role> Roles { get; set; }
+        public DbSet<PromoCode> PromoCodes { get; set; }
         
-        public DbSet<Employee> Employees { get; set; }
-
+        public DbSet<Customer> Customeres { get; set; }
+        public DbSet<Preference> Preferences { get; set; }
         public MongoDataContext()
         {
             
@@ -26,8 +25,10 @@ namespace Pcf.Administration.DataAccess
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
-            modelBuilder.Entity<Role>().ToCollection("roles");
-            modelBuilder.Entity<Employee>().ToCollection("employees");
+            modelBuilder.Entity<PromoCode>().ToCollection("PromoCodes");
+            modelBuilder.Entity<Customer>().ToCollection("Customers");
+            modelBuilder.Entity<Preference>().ToCollection("Preferences");
+
         }
     }
 }

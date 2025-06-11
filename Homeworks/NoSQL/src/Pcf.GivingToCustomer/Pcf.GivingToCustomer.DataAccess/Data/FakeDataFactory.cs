@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using MongoDB.Bson;
 using Pcf.GivingToCustomer.Core.Domain;
 
 namespace Pcf.GivingToCustomer.DataAccess.Data
@@ -12,17 +13,17 @@ namespace Pcf.GivingToCustomer.DataAccess.Data
         {
             new Preference()
             {
-                Id = Guid.Parse("ef7f299f-92d7-459f-896e-078ed53ef99c"),
+                Id =ObjectId.Parse("ef7f299f-92d7-459f-896e-078ed53ef99c"),
                 Name = "Театр",
             },
             new Preference()
             {
-                Id = Guid.Parse("c4bda62e-fc74-4256-a956-4760b3858cbd"),
+                Id = ObjectId.Parse("c4bda62e-fc74-4256-a956-4760b3858cbd"),
                 Name = "Семья",
             },
             new Preference()
             {
-                Id = Guid.Parse("76324c47-68d2-472d-abb8-33cfa8cc0c84"),
+                Id =ObjectId.Parse("76324c47-68d2-472d-abb8-33cfa8cc0c84"),
                 Name = "Дети",
             }
         };
@@ -31,7 +32,7 @@ namespace Pcf.GivingToCustomer.DataAccess.Data
         {
             get
             {
-                var customerId = Guid.Parse("a6c8c6b1-4349-45b0-ab31-244740aaf0f0");
+                var customerId = ObjectId.GenerateNewId();// Guid.Parse("a6c8c6b1-4349-45b0-ab31-244740aaf0f0");
                 var customers = new List<Customer>()
                 {
                     new Customer()
@@ -45,12 +46,12 @@ namespace Pcf.GivingToCustomer.DataAccess.Data
                             new CustomerPreference()
                             {
                                 CustomerId = customerId,
-                                PreferenceId = Guid.Parse("76324c47-68d2-472d-abb8-33cfa8cc0c84")
+                                PreferenceId =Preferences.FirstOrDefault(x=>x.Name=="Дети").Id//  Guid.Parse("76324c47-68d2-472d-abb8-33cfa8cc0c84")
                             },
                             new CustomerPreference()
                             {
                                 CustomerId = customerId,
-                                PreferenceId = Guid.Parse("ef7f299f-92d7-459f-896e-078ed53ef99c")
+                                PreferenceId =Preferences.FirstOrDefault(x=>x.Name=="Театр").Id//  Guid.Parse("ef7f299f-92d7-459f-896e-078ed53ef99c")
                             }
                         }
                     }

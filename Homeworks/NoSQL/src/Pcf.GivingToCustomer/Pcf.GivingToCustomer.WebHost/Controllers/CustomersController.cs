@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
+using MongoDB.Bson;
 using Pcf.GivingToCustomer.Core.Abstractions.Repositories;
 using Pcf.GivingToCustomer.Core.Domain;
 using Pcf.GivingToCustomer.WebHost.Mappers;
@@ -53,10 +54,10 @@ namespace Pcf.GivingToCustomer.WebHost.Controllers
         /// </summary>
         /// <param name="id">Id клиента, например <example>a6c8c6b1-4349-45b0-ab31-244740aaf0f0</example></param>
         /// <returns></returns>
-        [HttpGet("{id:guid}")]
-        public async Task<ActionResult<CustomerResponse>> GetCustomerAsync(Guid id)
+        [HttpGet("{id:string}")]
+        public async Task<ActionResult<CustomerResponse>> GetCustomerAsync(string id)
         {
-            var customer =  await _customerRepository.GetByIdAsync(id);
+            var customer =  await _customerRepository.GetByIdAsync(ObjectId.Parse(id));
 
             var response = new CustomerResponse(customer);
 
@@ -86,10 +87,10 @@ namespace Pcf.GivingToCustomer.WebHost.Controllers
         /// </summary>
         /// <param name="id">Id клиента, например <example>a6c8c6b1-4349-45b0-ab31-244740aaf0f0</example></param>
         /// <param name="request">Данные запроса></param>
-        [HttpPut("{id:guid}")]
-        public async Task<IActionResult> EditCustomersAsync(Guid id, CreateOrEditCustomerRequest request)
+        [HttpPut("{id:string}")]
+        public async Task<IActionResult> EditCustomersAsync(string id, CreateOrEditCustomerRequest request)
         {
-            var customer = await _customerRepository.GetByIdAsync(id);
+            var customer = await _customerRepository.GetByIdAsync(ObjectId.Parse(id));
             
             if (customer == null)
                 return NotFound();
@@ -107,10 +108,10 @@ namespace Pcf.GivingToCustomer.WebHost.Controllers
         /// Удалить клиента
         /// </summary>
         /// <param name="id">Id клиента, например <example>a6c8c6b1-4349-45b0-ab31-244740aaf0f0</example></param>
-        [HttpDelete("{id:guid}")]
-        public async Task<IActionResult> DeleteCustomerAsync(Guid id)
+        [HttpDelete("{id:string}")]
+        public async Task<IActionResult> DeleteCustomerAsync(string id)
         {
-            var customer = await _customerRepository.GetByIdAsync(id);
+            var customer = await _customerRepository.GetByIdAsync(ObjectId.Parse(id));
             
             if (customer == null)
                 return NotFound();

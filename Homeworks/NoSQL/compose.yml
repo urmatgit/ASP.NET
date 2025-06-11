@@ -1,7 +1,8 @@
 services:
   #Administration Db
   promocode-factory-administration-db:
-    image: "postgres:latest"
+    #image:  "postgres:latest"
+    image:  "mongo:4.2.3"
     container_name: 'promocode-factory-administration-db'
     restart: always 
     ports:

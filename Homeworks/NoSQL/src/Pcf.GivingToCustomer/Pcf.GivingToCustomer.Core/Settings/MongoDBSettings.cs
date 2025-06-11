@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Pcf.Administration.Core.Domain.Settings
+namespace Pcf.GivingToCustomer.Core.Domain.Settings
 {
     public class MongoDBSettings
     {
