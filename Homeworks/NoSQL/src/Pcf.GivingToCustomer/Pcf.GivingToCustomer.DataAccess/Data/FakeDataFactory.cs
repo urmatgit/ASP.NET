@@ -13,17 +13,17 @@ namespace Pcf.GivingToCustomer.DataAccess.Data
         {
             new Preference()
             {
-                Id =ObjectId.Parse("ef7f299f-92d7-459f-896e-078ed53ef99c"),
+                Id =ObjectId.GenerateNewId(), // Parse("ef7f299f-92d7-459f-896e-078ed53ef99c"),
                 Name = "Театр",
             },
             new Preference()
             {
-                Id = ObjectId.Parse("c4bda62e-fc74-4256-a956-4760b3858cbd"),
+                Id = ObjectId.GenerateNewId(), //Parse("c4bda62e-fc74-4256-a956-4760b3858cbd"),
                 Name = "Семья",
             },
             new Preference()
             {
-                Id =ObjectId.Parse("76324c47-68d2-472d-abb8-33cfa8cc0c84"),
+                Id =ObjectId.GenerateNewId(), //Parse("76324c47-68d2-472d-abb8-33cfa8cc0c84"),
                 Name = "Дети",
             }
         };
@@ -47,12 +47,13 @@ namespace Pcf.GivingToCustomer.DataAccess.Data
                             {
                                 CustomerId = customerId,
                                 PreferenceId =Preferences.FirstOrDefault(x=>x.Name=="Дети").Id//  Guid.Parse("76324c47-68d2-472d-abb8-33cfa8cc0c84")
-                            },
-                            new CustomerPreference()
-                            {
-                                CustomerId = customerId,
-                                PreferenceId =Preferences.FirstOrDefault(x=>x.Name=="Театр").Id//  Guid.Parse("ef7f299f-92d7-459f-896e-078ed53ef99c")
                             }
+                            //,
+                            //new CustomerPreference()
+                            //{
+                            //    CustomerId = customerId,
+                            //    PreferenceId =Preferences.FirstOrDefault(x=>x.Name=="Театр").Id//  Guid.Parse("ef7f299f-92d7-459f-896e-078ed53ef99c")
+                            //}
                         }
                     }
                 };

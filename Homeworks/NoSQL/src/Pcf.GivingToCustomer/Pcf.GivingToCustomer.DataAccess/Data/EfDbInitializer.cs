@@ -5,9 +5,9 @@ namespace Pcf.GivingToCustomer.DataAccess.Data
     public class EfDbInitializer
         : IDbInitializer
     {
-        private readonly DataContext _dataContext;
+        private readonly MongoDataContext _dataContext;
 
-        public EfDbInitializer(DataContext dataContext)
+        public EfDbInitializer(MongoDataContext dataContext)
         {
             _dataContext = dataContext;
         }
@@ -18,10 +18,10 @@ namespace Pcf.GivingToCustomer.DataAccess.Data
             _dataContext.Database.EnsureCreated();
 
             _dataContext.AddRange(FakeDataFactory.Preferences);
-            _dataContext.SaveChanges();
+           // _dataContext.SaveChanges();
             
-            _dataContext.AddRange(FakeDataFactory.Customers);
-            _dataContext.SaveChanges();
+         //   _dataContext.AddRange(FakeDataFactory.Customers);
+            //_dataContext.SaveChanges();
         }
     }
 }

@@ -16,7 +16,7 @@ namespace Pcf.GivingToCustomer.DataAccess
             
         }
         
-        public MongoDataContext(DbContextOptions<DataContext> options)
+        public MongoDataContext(DbContextOptions<MongoDataContext> options)
             : base(options)
         {
 
